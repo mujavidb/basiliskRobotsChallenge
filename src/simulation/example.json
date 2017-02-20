@@ -1,0 +1,33 @@
+{
+    //ARRAY of point locations for robot starting points
+    "robots": [
+        {
+            "x": 6.123123,
+            "y": 2.34234
+        }
+    ],
+
+    //ARRAY of obstacles
+    "obstacles": [
+
+        //ARRAY of points making up obstacle (polygon)
+        [
+            {
+                "x": 21.123123,
+                "y": 2.34234
+            },
+            {
+                "x": 4.123123,
+                "y": 2.34234
+            },
+            {
+                "x": 1.123123,
+                "y": 2.34234
+            },
+            {
+                "x": 421.123123,
+                "y": 2.34234
+            }
+        ]
+    ]
+}
