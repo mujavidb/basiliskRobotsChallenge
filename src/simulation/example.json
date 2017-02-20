@@ -1,33 +1,27 @@
-{
-    //ARRAY of point locations for robot starting points
-    "robots": [
-        {
-            "x": 6.123123,
-            "y": 2.34234
-        }
-    ],
-
-    //ARRAY of obstacles
-    "obstacles": [
-
-        //ARRAY of points making up obstacle (polygon)
-        [
+// Array of question solutions
+[
+    {
+        //ARRAY of point locations for robot starting point and future locations in order
+        "robots": [
             {
-                "x": 21.123123,
-                "y": 2.34234
-            },
-            {
-                "x": 4.123123,
-                "y": 2.34234
-            },
-            {
-                "x": 1.123123,
-                "y": 2.34234
-            },
-            {
-                "x": 421.123123,
-                "y": 2.34234
+                "start": [160, 240],
+                "locations": [
+                    [120, 280],
+                    [100, 200]
+                ]
             }
+        ],
+
+        //ARRAY of obstacles
+        "obstacles": [
+
+            //ARRAY of points making up obstacle (polygon)
+            [
+                [5, 5],
+                [20, 5],
+                [20, 10],
+                [5, 10]
+            ]
         ]
-    ]
-}
+    }
+]
