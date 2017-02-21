@@ -17,7 +17,7 @@ def main():
             obstacles = list(map(lambda k: eval(k), obstacles))
 
         robot_pos = eval("[" + robot_pos.replace("\n", "") + "]")
-        print(robot_pos)
+
 
 if __name__ == "__main__":
     main()
