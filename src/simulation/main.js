@@ -5271,7 +5271,7 @@ const drawRobotPath = (robot) => {
 	   .attr("r", STROKE_WIDTH * 1.5)
 	   .attr("stroke-width", 0)
 	   .attr("fill", "black")
-}
+
 
 const setup = () => {
 	// Make an instance of two and place it on the page.
