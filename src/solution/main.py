@@ -18,6 +18,5 @@ def main():
 
         robot_pos = eval("[" + robot_pos.replace("\n", "") + "]")
 
-
 if __name__ == "__main__":
     main()
