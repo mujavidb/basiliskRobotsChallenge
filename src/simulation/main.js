@@ -5185,6 +5185,22 @@ const data = {
     ]
 }
 
+let LENGTH
+let ASPECT_RATIO
+let PADDING
+let DIMENSIONS
+let STROKE_WIDTH
+let APP
+
+const generateLightColor = () => {
+	const g = () => Math.floor(100 + Math.random()*155)
+	return `rgb(${g()},${g()},${g()})`
+}
+
+const generateDarkColor = () => {
+	const g = () => Math.floor(Math.random()*150)
+	return `rgb(${g()},${g()},${g()})`
+}
 
 const getDimensions = () => {
 	let maxHeight = 0
@@ -5224,60 +5240,69 @@ const getDimensions = () => {
 }
 
 
-const drawObstacle = (app, obstacle) => {
-	// app.append("circle")
-	//    .attr("cx", obstacle[0][0])
-	//    .attr("cy", obstacle[0][1])
-	//    .attr("r", 2)
-	//    .attr("stroke-width", 2)
-	//    .attr("stroke", "#f00")
-	//    .attr("fill", "none")
+const drawObstacle = (obstacle) => {
 
 	const lineGenerator = d3.line()
 				            .x(d => d[0])
 				            .y(d => d[1])
-	app.append("path")
+	APP.append("path")
 	   .attr("d", lineGenerator(obstacle))
 	   .attr("stroke-width", 0)
-	   .attr("fill", "#f00")
+	   .attr("fill", generateDarkColor())
+	   // .attr("fill", "#f00")
 }
 
-const drawRobotPath = (app, robot) => {
-	app.append("circle")
-	   .attr("cx", robot[0][0])
-	   .attr("cy", robot[0][1])
-	   .attr("r", 0.5)
-	   .attr("stroke-width", 0)
-	   .attr("fill", "dodgerblue")
+const drawRobotPath = (robot) => {
+	let pathColor = generateLightColor()
 
 	if (robot.length > 1){
 		const lineGenerator = d3.line()
 				                .x(d => d[0])
 				                .y(d => d[1])
-		app.append("path")
+		APP.append("path")
 		   .attr("d", lineGenerator(robot))
-		   .attr("stroke", "#FF8000")
-		   .attr("stroke-width", 0.1)
+		   .attr("stroke", pathColor)
+		   // .attr("stroke", "#FF8000")
+		   .attr("stroke-width", STROKE_WIDTH)
 		   .attr("fill", "none")
 	}
+
+	APP.append("circle")
+	   .attr("cx", robot[0][0])
+	   .attr("cy", robot[0][1])
+	   .attr("r", STROKE_WIDTH * 1.5)
+	   .attr("stroke-width", 0)
+	   .attr("fill", "#000")
+	   // .attr("fill", "dodgerblue")
 }
 
 const setup = () => {
 	// Make an instance of two and place it on the page.
-	const dimensions = getDimensions()
-	const padding = 10
-	const app = d3.select("#container")
-	app.attr("width", 600)
-	   .attr("height", 600)
+	LENGTH = 600
+	ASPECT_RATIO = 1
+	DIMENSIONS = getDimensions()
+	STROKE_WIDTH = ((DIMENSIONS.width.max - DIMENSIONS.width.min) / LENGTH) * 2
+	PADDING = ((DIMENSIONS.width.max - DIMENSIONS.width.min) / LENGTH) * 100
+
+	const viewSizes = {
+		minX: DIMENSIONS.width.min - PADDING,
+		minY: DIMENSIONS.height.min - PADDING,
+		width: DIMENSIONS.width.max - DIMENSIONS.width.min + 2*PADDING,
+		height: DIMENSIONS.height.max - DIMENSIONS.height.min + 2*PADDING
+	}
+
+	APP = d3.select("#container")
+	APP.attr("width", LENGTH * ASPECT_RATIO)
+	   .attr("height", LENGTH)
 	   .attr("preserveAspectRatio", "xMidYMid meet")
-	   .attr("viewBox", `${dimensions.width.min - padding} ${dimensions.height.min - padding} ${dimensions.width.max - dimensions.width.min + 2*padding} ${dimensions.height.max - dimensions.height.min + 2*padding}`)
+	   .attr("viewBox", `${viewSizes.minX} ${viewSizes.minY} ${viewSizes.width} ${viewSizes.height}`)
 	
 	for (let obstacle of data.obstacles) {
-		drawObstacle(app, obstacle)
+		drawObstacle(obstacle)
 	}
 
 	for (let robot of data.robots) {
-		drawRobotPath(app, robot)
+		drawRobotPath(robot)
 	}
 
 }
