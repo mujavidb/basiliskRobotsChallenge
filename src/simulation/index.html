@@ -2,34 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="js/two.min.js"></script>
-    //change it based on wherever two.min.js is
-    <script type="js/main.js"></script>
-    //move all the js to here l8r
+    <title>Home</title>
   </head>
   <body>
-    <script>
-	// Make an instance of two and place it on the page.
-	var elem = document.getElementById('draw-shapes');
-	var params = { width: 285, height: 200 };
-	var two = new Two(params).appendTo(elem);
-
-	// two has convenience methods to create shapes.
-	var circle = two.makeCircle(72, 100, 50);
-	var rect = two.makeRectangle(213, 100, 100, 100);
-
-	// The object returned has many stylable properties:
-	circle.fill = '#FF8000';
-	circle.stroke = 'orangered'; // Accepts all valid css color
-	circle.linewidth = 5;
-
-	rect.fill = 'rgb(0, 200, 255)';
-	rect.opacity = 0.75;
-	rect.noStroke();
-
-	// Don't forget to tell two to render everything
-	// to the screen
-	two.update();
-    </script>
+    <script type="main.js"></script>
+    <script type="d3/d3.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
   </body>
 </html>
