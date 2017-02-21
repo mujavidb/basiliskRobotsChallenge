@@ -3,10 +3,30 @@
 <head>
 	<meta charset="UTF-8">
 	<title>NP Simulation</title>
+	<style type="text/css">
+		body {
+			font-family: sans-serif;
+			width:100vw;
+			height:100vh;
+			margin:0;
+		}
+		h1 {
+			text-align: center;
+			color: #3c3c3c;
+		}
+		svg {
+			background-color:#4c4c4c;
+			margin:0 auto;
+			display:block;
+		}
+	</style>
 </head>
-<body style="width:100vw;height:100vh;margin:0;">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script src="pixi.min.js"></script>
+<body>
+	<h1>NP Simulation</h1>
+	<svg id="container">
+
+	</svg>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script src="main.js" defer></script>
 </body>
 </html>

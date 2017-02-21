@@ -71,50 +71,66 @@ const getDimensions = () => {
 }
 
 
-const drawObstacle = (graphics, obstacle) => {
-	graphics.beginFill(0xFF8000)
-	graphics.lineStyle(1, 0x00AA00)
+const drawObstacle = (app, obstacle) => {
+	// app.append("circle")
+	//    .attr("cx", obstacle[0][0])
+	//    .attr("cy", obstacle[0][1])
+	//    .attr("r", 2)
+	//    .attr("stroke-width", 2)
+	//    .attr("stroke", "#f00")
+	//    .attr("fill", "none")
 
-	graphics.moveTo(obstacle[0][0],obstacle[0][1])
-	for (let i = 1; i < obstacle.length; i++) {
-		graphics.lineTo(obstacle[i][0], obstacle[i][1])
-	}
-	graphics.closePath()
-	graphics.endFill()
+	const lineGenerator = d3.line()
+				              .x(d => d[0])
+				              .y(d => d[1])
+				              // .interpolate("linear")
+	app.append("path")
+	   .attr("d", lineGenerator(obstacle))
+	   .attr("stroke-width", 1)
+	   .attr("stroke", "#f00")
+	   .attr("fill", "none")
 }
 
-const drawRobotPath = (graphics, robot) => {
+const drawRobotPath = (app, robot) => {
 	if (robot.length > 1){
-		graphics.lineStyle(1, 0x00AAFF)
-
-		graphics.moveTo(robot[0][0],robot[0][1])
-		for (let i = 1; i < robot.length; i++) {
-			graphics.lineTo(robot[i][0], robot[i][1])
-		}
+		const lineGenerator = d3.line()
+				              .x(d => d[0])
+				              .y(d => d[1])
+				              // .interpolate("linear")
+		app.append("path")
+		   .attr("d", lineGenerator(robot))
+		   .attr("stroke", "#FF8000")
+		   .attr("stroke-width", 1)
+		   .attr("fill", "none")
 	} else {
-
+		app.append("circle")
+		   .attr("cx", robot[0][0])
+		   .attr("cy", robot[0][1])
+		   .attr("r", 2)
+		   .attr("stroke-width", 1)
+		   .attr("stroke", "#FF8000")
+		   .attr("fill", "none")
 	}
 }
 
 const setup = () => {
 	// Make an instance of two and place it on the page.
 	const dimensions = getDimensions()
-	const app = new PIXI.Application(
-		dimensions.width.max - dimensions.width.min,
-		dimensions.height.max - dimensions.height.min,
-		{ antialias: true })
-	document.body.appendChild(app.view)
-	const graphics = new PIXI.Graphics()
+	const padding = 10
+	const app = d3.select("#container")
+	app.attr("width", 600)
+	   .attr("height", 600)
+	   .attr("preserveAspectRatio", "xMidYMid meet")
+	   .attr("viewBox", `${dimensions.width.min - padding} ${dimensions.height.min - padding} ${dimensions.width.max - dimensions.width.min + 2*padding} ${dimensions.height.max - dimensions.height.min + 2*padding}`)
+	
+	for (let obstacle of data.obstacles) {
+		drawObstacle(app, obstacle)
+	}
 
 	for (let robot of data.robots) {
-		drawRobotPath(graphics, robot)
+		drawRobotPath(app, robot)
 	}
 
-	for (let obstacle of data.obstacles) {
-		drawObstacle(graphics, obstacle)
-	}
-
-	app.stage.addChild(graphics);
 }
 
 document.addEventListener("DOMContentLoaded", setup)
