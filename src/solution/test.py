@@ -14,6 +14,6 @@ shortest = g.shortest_path(vg.Point(-1, -1), vg.Point(4, 4))
 
 print(shortest)
 
-g.save('graph.img')
-g2 = vg.VisGraph()
-g2.load('graph.pk1')
+# g.save('graph.img')
+# g2 = vg.VisGraph()
+# g2.load('graph.pk1')
