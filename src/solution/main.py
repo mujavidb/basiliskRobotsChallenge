@@ -6,7 +6,7 @@ def main():
 
     a = data.readlines()
     path_map = {}
-    for i, line in enumerate(a[11:12], 11):
+    for i, line in enumerate(a[4:5], 4):
         _, cords = line.split(':')
         obstacles = []
         robot_pos = cords
@@ -23,7 +23,6 @@ def main():
         map_i = run(obstacles, robot_pos, i)
 
         path_map[i] = map_i
-    import json
     print(json.dumps(path_map))
 
 
