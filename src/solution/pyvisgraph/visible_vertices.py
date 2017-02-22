@@ -29,6 +29,7 @@ INF = 10000
 
 
 def visible_vertices(point, graph, origin=None, destination=None, scan='full'):
+    # print("Inside visible_vertices")
     """Returns list of Points in graph visible by point.
 
     If origin and/or destination Points are given, these will also be checked
@@ -327,6 +328,7 @@ def edge_intersect(p1, q1, edge):
 
 
 def insort(a, x):
+    # print("Inside insort")
     lo = 0
     hi = len(a)
     while lo < hi:
@@ -337,6 +339,7 @@ def insort(a, x):
 
 
 def bisect(a, x):
+    # print("Inside bisect")
     lo = 0
     hi = len(a)
     while lo < hi:
