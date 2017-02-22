@@ -5,8 +5,8 @@ def main():
     data = open("robots.mat.txt")
 
     a = data.readlines()
-
-    for line in a[4:5]:
+    path_map = {}
+    for i, line in enumerate(a[k:t], k):
         _, cords = line.split(':')
         obstacles = []
         robot_pos = cords
@@ -19,8 +19,13 @@ def main():
             obstacles = list(map(lambda k: eval(k), obstacles))
 
         robot_pos = eval("[" + robot_pos.replace("\n", "") + "]")
-        print(robot_pos)
-        run(obstacles, robot_pos)
+        # print(robot_pos)
+        map_i = run(obstacles, robot_pos, i)
+
+        path_map[i] = map_i
+    import json
+    print(json.dumps(path_map))
+
 
 
 if __name__ == "__main__":

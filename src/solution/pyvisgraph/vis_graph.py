@@ -107,7 +107,7 @@ class VisGraph(object):
         Will return in-order list of Points of the shortest path found. If
         origin or destination are not in the visibility graph, their respective
         visibility edges will be found, but only kept temporarily for finding
-        the shortest path. 
+        the shortest path.
         """
 
         origin_exists = origin in self.visgraph
@@ -148,6 +148,7 @@ def _vis_graph_wrapper(args):
 
 
 def _vis_graph(graph, points, worker, status):
+    # print("inisde _vis_graph")
     total_points = len(points)
     visible_edges = []
     if status:
