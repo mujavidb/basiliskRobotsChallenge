@@ -6,7 +6,7 @@ def main():
 
     a = data.readlines()
     path_map = {}
-    for i, line in enumerate(a[0:10], 0):
+    for i, line in enumerate(a[11:12], 11):
         _, cords = line.split(':')
         obstacles = []
         robot_pos = cords
