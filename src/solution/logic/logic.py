@@ -34,7 +34,7 @@ def run(polygons, robots, case_number):
                 pts = list(reversed(ret_map[j][i]))
             else:
                 for p in path_map[i][j]:
-                    pts.append([[p.x, p.y]])
+                    pts.append([p.x, p.y])
             new_array.append(pts)
         ret_map.append(new_array)
 
