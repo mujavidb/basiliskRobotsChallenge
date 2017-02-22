@@ -19,7 +19,7 @@ def run(polygons, robots, case_number):
 
     for i, s in enumerate(robots):
         for j, d in enumerate(robots):
-            if  i != j:
+            if  i != j and j > i:
                 source, dest = vg.Point(s[0], s[1]), vg.Point(d[0], d[1])
                 path_map[i][j] = graph.shortest_path(source, dest)
 
