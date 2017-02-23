@@ -86,9 +86,10 @@ const drawObstacle = obstacle => {
 }
 let fun = 0
 
-const drawRobotPath = robot => {
+const drawRobotPath = (robot, printCoords = false) => {
 	if (robot.toString() != "") {
 		let pathColor = generateLightColor()
+
 
 		if (robot.length > 1){
 			const lineGenerator = d3.line()
@@ -108,6 +109,17 @@ const drawRobotPath = robot => {
 		   .attr("r", STROKE_WIDTH * 1.5)
 		   .attr("stroke-width", 0)
 		   .attr("fill", "black")
+		
+		if (printCoords) {
+			let robotLocation = APP.append("text")
+			   .attr("x", robot[0][0])
+			   .attr("y", robot[0][1])
+			   .attr("fill", "red")
+			   .attr("background-color", "none")
+			   .attr("font-family", "sans-serif")
+			   .attr("font-size", "8px")
+			   .text(`(${robot[0][0]}, ${robot[0][1]})`)
+		}
 	}
 }
 
@@ -132,9 +144,15 @@ const simulateSolution = data => {
 	   .attr("preserveAspectRatio", "xMidYMid meet")
 	   .attr("viewBox", `${viewSizes.minX} ${viewSizes.minY} ${viewSizes.width} ${viewSizes.height}`)
 
-	data.obstacles.map(obstacle => drawObstacle(obstacle))
-	
-	data.robots.map(robot => drawRobotPath(robot))
+	for (let obstacle of data.obstacles) {
+		drawObstacle(obstacle)
+	}
+
+	for (let i = 0; i < data.robots.length; i++ ) {
+
+		//change logic to pass true flag to print robot location
+		drawRobotPath(data.robots[i], i < 10 ? true : false)
+	}
 }
 
 const setup = () => {
