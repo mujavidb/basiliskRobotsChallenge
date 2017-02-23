@@ -5,6 +5,21 @@ let DIMENSIONS
 let STROKE_WIDTH
 let APP
 
+const getSolutionNumber = () => {
+	const name = "q"
+    const regex = new RegExp("[?&]" + name.replace(/[\[\]]/g,"\\$&") + "(=([^&#]*)|&|#|$)")
+    const results = regex.exec(window.location.href)[2].replace(/\+/g, " ")
+    return decodeURIComponent(results)
+}
+
+const goNext = forwards => {
+	let page = parseInt(getSolutionNumber("q"))
+	page = forwards ? page+1 : page - 1
+	page = page > 30 ? 1 : page
+	page = page < 1 ? 30 : page
+	location.replace(`http://localhost:8080/?q=${page}`)
+}
+
 const generateLightColor = () => {
 	const g = () => Math.floor(100 + Math.random()*155)
 	return `rgb(${g()},${g()},${g()})`
@@ -123,14 +138,9 @@ const simulateSolution = data => {
 }
 
 const setup = () => {
-	function getParameterByName(name) {
-	    const regex = new RegExp("[?&]" + name.replace(/[\[\]]/g,"\\$&") + "(=([^&#]*)|&|#|$)")
-	    const results = regex.exec(window.location.href)[2].replace(/\+/g, " ")
-	    return decodeURIComponent(results)
-	}
 
 	//get latest data from server
-	const questionNumber = getParameterByName("q")
+	const questionNumber = getSolutionNumber()
 	const req = new XMLHttpRequest()
 	req.open('GET', `/sol_${questionNumber}.json`, true)
 	req.onreadystatechange = function (data) {

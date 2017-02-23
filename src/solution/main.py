@@ -39,11 +39,10 @@ def main():
 
         a["obstacles"] = obstacles
         a["robots"] = map_i.values()
-
+        print(json.dumps(a["robots"], indent=4))
         # import json
-        with open('sol_' + str(i + 1) + '.json', 'w') as outfile:
+        with open('sol_' + str(30) + '.json', 'w') as outfile:
             json.dump(a, outfile)
-
 
 
 if __name__ == "__main__":
