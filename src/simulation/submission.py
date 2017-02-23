@@ -1,28 +1,43 @@
 import json
 import sys
 
-def write_file():
+# FORMAT:
+# team name
+# password
+# <ProblemSolution> := <number>: <Solution>
+# <Solution> := <path> | <Solution> ";" <path>
+# <path> := <points>
+# <points> := <point> | <points> "," <point>
+# <point> := "(" <float> "," <float> ")"
 
-    # FORMAT:
-    # team name
-    # password
-    # <ProblemSolution> := <number>: <Solution>
-    # <Solution> := <path> | <Solution> ";" <path>
-    # <path> := <points>
-    # <points> := <point> | <points> "," <point>
-    # <point> := "(" <float> "," <float> ")"
+text_file = open("basilisk.txt", "w")
+text_file.write('basilisk\n')
+text_file.write('4j5014cid8bhrefhbjv3lpqfsv\n')
 
-    text_file = open("basilisk.txt", "w")
-    text_file.write('basilisk\n')
-    text_file.write('4j5014cid8bhrefhbjv3lpqfsv\n')
-    text_file.write(string)
-    text_file.close()
+start = 1
+end = 30
+for i in xrange(start, end + 1):
+    filename = "sol_{}.json".format(i)
+    try:
+        currentFile = open(filename)
+    except IOError:
+        continue
+    fileAsString = currentFile.read()
+    structuredData = json.loads(fileAsString)
+    robots = structuredData["robots"]
+    output = ""
+    output += "{}: ".format(i)
+    for i, robot in enumerate(robots):
+        for j, point in enumerate(robot):
+            output += "({}, {})".format(point[0], point[1])
+            if j == len(robot) - 1:
+                if i != len(robots) - 1:
+                    output += "; "
+                else: 
+                    output += ""
+            else:
+                output += ", " 
+    output += "\n"
+    text_file.write(output)
 
-array = ['sol_1.json', 'sol_2.json', 'sol_3.json', 'sol_4.json', 'sol_5.json', 'sol_6.json', 'sol_7.json', 'sol_8.json', 'sol_9.json', 'sol_10.json', 'sol_11.json', 'sol_12.json', 'sol_13.json', 'sol_14.json', 'sol_15.json', 'sol_16.json', 'sol_17.json', 'sol_18.json', 'sol_19.json', 'sol_20.json', 'sol_21.json', 'sol_22.json', 'sol_23.json', 'sol_24.json', 'sol_25.json', 'sol_26.json', 'sol_27.json', 'sol_28.json', 'sol_29.json', 'sol_30.json']
-data = []
-for i in range(0 , 30):
-    with open(array[i]) as f:
-        for line in f:
-            data.append(json.dumps(line))
-        string = str(data)
-        write_file()
+text_file.close()
