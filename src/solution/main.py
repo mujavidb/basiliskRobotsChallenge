@@ -7,7 +7,7 @@ def main():
 
     a = data.readlines()
     path_map = {}
-    k = 5
+    k = 0
     for i, line in enumerate(a[k:k+1], k):
         _, cords = line.split(':')
         obstacles = []
