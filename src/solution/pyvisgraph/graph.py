@@ -104,6 +104,7 @@ class Graph(object):
         self.graph = defaultdict(set)
         self.edges = set()
         self.polygons = defaultdict(set)
+        self.convex_edges = set([])
         pid = 0
         for polygon in polygons:
             if polygon[0] == polygon[-1] and len(polygon) > 1:
@@ -118,11 +119,39 @@ class Graph(object):
                 self.add_edge(edge)
             if len(polygon) > 2:
                 pid += 1
+        self.convex_vertices = self.get_points()
+        self.is_convex(polygons)
+
+        # print(self.graph.keys())
+
+    def is_convex(self, polygons):
+        avoided = set([])
+        for polygon in polygons:
+            for i in range(len(polygon)):
+                current = polygon[i]
+                next = polygon[(i + 1) % len(polygon)]
+                prev_index = 0
+                if not i:
+                    prev_index = len(polygon) - 1
+                else:
+                    prev_index = i - 1
+                previous = polygon[prev_index]
+                left = (current.x - previous.x, current.y - previous.y)
+                right = (next.x - current.x, next.y - current.y)
+                cross = (left[0] * right[1]) - (left[1] * right[0])
+                if cross >= 0:
+                    avoided.add(current)
+        for a in avoided:
+            self.convex_vertices.remove(a)
+
+
 
     def get_adjacent_points(self, point):
         return [edge.get_adjacent(point) for edge in self[point]]
 
-    def get_points(self):
+    def get_points(self, con=False):
+        if con:
+            return self.convex_vertices
         return list(self.graph)
 
     def get_edges(self):

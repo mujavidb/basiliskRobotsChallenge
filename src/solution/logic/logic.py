@@ -4,17 +4,16 @@ import pyvisgraph as vg
 
 def run(polygons, robots, case_number):
     # print("Now Processing #case :" + str(case_number) +
-    # " #Robots = " + str(len(robots)) + " #polygons = " + str(len(polygons)))
-    # polygon_objs = []
-    # for polygon in polygons:
-    #     poly = []
-    #     for p in polygon:
-    #         poly.append(vg.Point(p[0], p[1]))
-    #     polygon_objs.append(poly)
-
+    #Robots = " + str(len(robots)) + " #polygons = " + str(len(polygons)))
+    polygon_objs = []
+    for polygon in polygons:
+        poly = []
+        for p in polygon:
+            poly.append(vg.Point(p[0], p[1]))
+        polygon_objs.append(poly)
     graph = vg.VisGraph()
-    graph.load('case' + str(case_number) + '.pk1')
-    # graph.build(polygon_objs)
+    # graph.load('case' + str(case_number) + '.pk1')
+    graph.build(polygon_objs)
 
     path_map = [[None for i in range(len(robots))] for j in range(len(robots))]
 

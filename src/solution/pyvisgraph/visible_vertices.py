@@ -27,6 +27,31 @@ from pyvisgraph.graph import Point
 
 INF = 10000
 
+from shapely.geometry import Point, LinearRing, LineString, Polygon
+#
+#
+# def visible_vertices(point, graph, origin=None, destination=None, scan='full'):
+#     polys = []
+#     for i, polygon in graph.polygons.iteritems():
+#         sub_poly = []
+#         for edge in polygon:
+#             p1, p2 = edge.p1, edge.p2
+#             sub_poly.extend([(p1.x, p1.y), (p2.x, p2.y)])
+#         polys.append(LineString(sub_poly))
+#
+#     visible = []
+#     for i, polygon in graph.polygons.iteritems():
+#         print("polygon " + str(i))
+#         for edge in polygon:
+#             for other in [edge.p1, edge.p2]:
+#                 line = LineString([(point.x, point.y), (other.x, other.y)])
+#                 for p in polys:
+#                     intersection = line.intersection(p)
+#                     if not intersection and intersection.geom_type != "Point":
+#                         visible.append(other)
+#                         print("Intersection found")
+#     return visible + [point]
+
 
 def visible_vertices(point, graph, origin=None, destination=None, scan='full'):
     # print("Inside visible_vertices")
@@ -112,6 +137,23 @@ def visible_vertices(point, graph, origin=None, destination=None, scan='full'):
 
 
 def polygon_crossing(p1, poly_edges):
+    if not poly_edges: return True
+    a = poly_edges.pop()
+    polys = [[a.p1.x, a.p1.y], [a.p2.x, a.p2.y]]
+    last = a.p2
+    while poly_edges:
+        curr = None
+        for edge in poly_edges:
+            if edge.p1 == last:
+                curr = edge
+        poly_edges.remove(curr)
+        polys.append([curr.p2.x, curr.p2.y])
+        last = curr.p2
+    poly = Polygon(polys)
+    return poly.contains(Point(p1.x, p1.y))
+
+
+def _polygon_crossing(p1, poly_edges):
     """Returns True if Point p1 is internal to the polygon The polygon is
     defined by the Edges in poly_edges. Uses crossings algorithm and takes into
     account edges that are collinear to p1."""
@@ -291,6 +333,11 @@ def ccw(A, B, C):
 
 
 def on_segment(p, q, r):
+    line = LineString([Point(p.x, p.y), Point(r.x, r.y)])
+    return line.contains(Point(q.x, q.y))
+
+
+def _on_segment(p, q, r):
     """Given three colinear points p, q, r, the function checks if point q
     lies on line segment 'pr'."""
     if (q.x <= max(p.x, r.x)) and (q.x >= min(p.x, r.x)):
@@ -299,7 +346,13 @@ def on_segment(p, q, r):
     return False
 
 
-def edge_intersect(p1, q1, edge):
+def edge_intersect(p1, p2, edge):
+    edge2 = LineString([Point(p1.x, p1.y), Point(p2.x, p2.y)])
+    edge1 = LineString([Point(edge.p1.x, edge.p1.y), Point(edge.p2.x, edge.p2.y)])
+    return edge1.intersects(edge2)
+
+
+def edge_intersect_1(p1, q1, edge):
     """Return True if edge from A, B interects edge.
     http://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/"""
     p2 = edge.p1
