@@ -18,14 +18,29 @@
 			background-color:#4c4c4c;
 			margin:0 auto;
 			display:block;
+			width: 600px;
+			height: 600px;
+		}
+		aside {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+		}
+		aside a {
+			font-size: 36px;
+			text-decoration: none;
+			color: dodgerblue;
 		}
 	</style>
 </head>
 <body>
-	<h1>NP Simulation</h1>
-	<svg id="container">
-
-	</svg>
+	<h1>NP Visualisation</h1>
+	<aside>
+		<a href="#" onClick="goNext(false)">&xdtri;</a>
+		<a href="#" onClick="goNext(true)">&xutri;</a>
+	</aside>
+	<svg id="container"></svg>
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script src="main.js" defer></script>
 </body>
