@@ -4,7 +4,7 @@ import pyvisgraph as vg
 
 def run(polygons, robots, case_number):
     # print("Now Processing #case :" + str(case_number) +
-    #Robots = " + str(len(robots)) + " #polygons = " + str(len(polygons)))
+    # Robots = " + str(len(robots)) + " #polygons = " + str(len(polygons)))
     polygon_objs = []
     for polygon in polygons:
         poly = []

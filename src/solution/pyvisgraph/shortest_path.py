@@ -41,14 +41,19 @@ def dijkstra(graph, origin, destination, add_to_visgraph):
     P = {}
     Q = priority_dict()
     Q[origin] = 0
-
     for v in Q:
+        # if v not in graph.convex_edges: continue
         D[v] = Q[v]
         if v == destination: break
 
         edges = graph[v]
         if add_to_visgraph != None and len(add_to_visgraph[v]) > 0:
-            edges = add_to_visgraph[v] | graph[v]
+            graph_edges = graph[v]
+            new_edges = set([])
+            for edge in graph_edges:
+                if edge.p1 in graph.convex_edges and edge.p2 in graph.convex_edges:
+                    new_edges.add(edge)
+            edges = add_to_visgraph[v] | new_edges
         for e in edges:
             w = e.get_adjacent(v)
             elength = D[v] + edge_distance(v, w)

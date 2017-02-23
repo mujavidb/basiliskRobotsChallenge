@@ -7,7 +7,7 @@ def main():
 
     a = data.readlines()
     path_map = {}
-    k = 0
+    k = 1
     for i, line in enumerate(a[k:k+1], k):
         _, cords = line.split(':')
         obstacles = []
@@ -23,9 +23,10 @@ def main():
         robot_pos = eval("[" + robot_pos.replace("\n", "") + "]")
         # print(robot_pos)
         print("Doing #" + str(i + 1) + " Number of robots = " + str(len(robot_pos)))
-        map_i = run(obstacles, robot_pos, i)
+        print(robot_pos)
+        map_i = run(obstacles, robot_pos[:125], i)
         path_map[i] = map_i
-    # print(json.dumps(path_map))
+        # print(json.dumps(path_map))
         eleventh = path_map[i]
 
         # paths = []

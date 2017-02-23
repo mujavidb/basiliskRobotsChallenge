@@ -53,7 +53,7 @@ from shapely.geometry import Point, LinearRing, LineString, Polygon
 #     return visible + [point]
 
 
-def visible_vertices(point, graph, origin=None, destination=None, scan='full'):
+def visible_vertices(point, graph, origin=None, destination=None, scan='full', con=False):
     # print("Inside visible_vertices")
     """Returns list of Points in graph visible by point.
 
@@ -133,6 +133,9 @@ def visible_vertices(point, graph, origin=None, destination=None, scan='full'):
 
         prev = p
         prev_visible = is_visible
+
+    if con:
+        visible = list(filter(lambda k: k in graph.convex_edges, visible))
     return visible
 
 

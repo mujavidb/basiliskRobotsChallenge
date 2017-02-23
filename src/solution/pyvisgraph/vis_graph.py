@@ -118,10 +118,10 @@ class VisGraph(object):
         dest = None if dest_exists else destination
         add_to_visg = Graph([])
         if not origin_exists:
-            for v in visible_vertices(origin, self.graph, destination=dest):
+            for v in visible_vertices(origin, self.graph, destination=dest, con=True):
                 add_to_visg.add_edge(Edge(origin, v))
         if not dest_exists:
-            for v in visible_vertices(destination, self.graph, origin=orgn):
+            for v in visible_vertices(destination, self.graph, origin=orgn, con=True):
                 add_to_visg.add_edge(Edge(destination, v))
         return shortest_path(self.visgraph, origin, destination, add_to_visg)
 
