@@ -39,7 +39,9 @@ def run(polygons, robots, case_number):
             new_array.append(pts)
         ret_map.append(new_array)
 
-    robot_paths = make_decisions(paths)
+    # return ret_map
+
+    robot_paths = make_decisions(ret_map)
 
     return robot_paths
 
@@ -54,9 +56,9 @@ def make_decisions(paths):
     # give starting pos for everything
     for i in range(len(paths)):
         if paths[i][0]:
-            map_path[i] = paths[i][0][0]
+            map_path[i] = [paths[i][0][0]]
         else:
-            map_path[i] = paths[i][1][0]
+            map_path[i] = [paths[i][1][0]]
 
     # tagging the target to the source
     tag_map = {0: None}
@@ -84,15 +86,15 @@ def make_decisions(paths):
 def find_closest(robot, sleeping, paths, tagged):
     closest = (None, float('inf'))
     for r in sleeping:
-        sub_closest = min(r, distance_to(robot, r, paths), key=lambda k: k[1])
+        sub_closest = min(closest, (r, distance_to(robot, r, paths)), key=lambda k: k[1])
         if sub_closest[0] not in tagged.values():
             closest = sub_closest
-    return closes[0]
+    return closest[0]
 
 
-def distance_to(from, to, paths):
+def distance_to(source, to, paths):
     total = 0
-    array = paths[from][to]
+    array = paths[source][to]
     for i in range(1, len(array)):
         total += ((array[i][0] - array[i - 1][0])**2 + (array[i][1] - array[i - 1][1]))
     return total
