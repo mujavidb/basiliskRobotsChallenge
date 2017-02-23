@@ -21,8 +21,8 @@ def main():
 
         robot_pos = eval("[" + robot_pos.replace("\n", "") + "]")
         # print(robot_pos)
-        map_i = run(obstacles, robot_pos, i)
         print("Doing #" + str(i + 1) + " Number of robots = " + str(len(robot_pos)))
+        map_i = run(obstacles, robot_pos, i)
         path_map[i] = map_i
     # print(json.dumps(path_map))
         eleventh = path_map[i]
